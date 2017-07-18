@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+		IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[${1:SpName}]') AND type in (N'P', N'PC'))
+		DROP PROCEDURE [dbo].[${1:this}]
+		GO
+		SET ANSI_NULLS ON
+		GO
+
+		SET QUOTED_IDENTIFIER ON
+		GO
+
+		CREATE PROCEDURE [dbo].[${1:SpName}] 
+			@iPracId INT,
+			@AutoChargeXML xml,
+			@iUserId INT
+			
+		AS
+			BEGIN
+			${2:Code}
+			END
+
+		GO
+
+		Grant Execute ON [dbo].[${1:SpName}] TO [CureMD_Role]
+		GO
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>SPCreate</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.sql</scope>
+</snippet>

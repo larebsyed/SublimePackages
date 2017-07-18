@@ -1,0 +1,21 @@
+<snippet>
+	<content><![CDATA[
+	public override bool Equals(System.Object obj){
+		if (obj == null)
+	      {
+	          return false;
+	      }
+		$SELECTION ${SELECTION/^(\w)|(?:_(\w))/(?1\l$1:)(?2 \u$2:)/g} = obj as $SELECTION;
+	      if ((System.Object)${SELECTION/^(\w)|(?:_(\w))/(?1\l$1:)(?2 \u$2:)/g}  == null)
+	      {
+	          return false;
+	      }
+		//Use PropertComparatorSnippet
+		return true;
+	}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

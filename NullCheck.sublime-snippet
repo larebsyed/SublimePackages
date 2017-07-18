@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[
+if(!string.IsNullOrEmpty(${1:row}["${SELECTION/.*\.([a-zA-Z]*)/(?1$1:)/g}"].ToString()))
+{
+	$SELECTION=Convert.To${3:Type}(${1:row}["${SELECTION/.*\.([a-zA-Z]*)/(?1$1:)/g}"]);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
