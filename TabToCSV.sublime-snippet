@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+   ${SELECTION/( {4,}(?!\n))|([^ ]+ ,[^ ]+)|(-{4,})/(?{1},)(?{2}")$2(?{2}")(?{3} )/g}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
