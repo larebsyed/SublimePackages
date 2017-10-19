@@ -6,7 +6,7 @@ GO
 Create table #SCMTemp       
 (
 DBName varchar(1000),
-${SELECTION/\K(?:(^select )*(?<!from)([^, ]*\.([^, ]*)(\s)*[^, ]*?)+([a-zA-Z]+)\s*(,)*(from)*)+?|(?<=from).*$/$5 (?{5}varchar\(500\))$6\n)/gs}
+${SELECTION/(?:(^SELECT )*((?<!from)(?:\([\(\)A-za-z\.\*]*\)).*?(\w*)?\s*(?:(,)|FROM.*)))/$3 (?{3}varchar\(500\))$4\n)/gsi}
 )
 --Creating a variable for DB name for selection Multiple DBs in a loop
 DECLARE @DBName NVARCHAR(255)
@@ -21,10 +21,8 @@ DECLARE DatabaseList CURSOR
 			  AND NAME LIKE '%_CureMD'
         
 OPEN DatabaseList
-
 --Using Fetch Statement to returns the status of the last cursor FETCH statement issued against any cursor
 -- currently opened by the connection.
-
     FETCH NEXT FROM DatabaseList INTO @DBName
     WHILE @@FETCH_STATUS = 0        -- The FETCH statement was successful when it returns 0
         BEGIN
@@ -32,8 +30,7 @@ OPEN DatabaseList
 	-- exec will execute the inner string
        exec('
         insert into #SCMTemp 
-		${SELECTION/(')|(^select)|(\[.*?\])/($1$1)(?{2}select '''+@DBName+''' DBName,)(?{3}'+@DBName+'..)$3/g}
-
+		${SELECTION/(')|(^select)|(\[.*?\])/($1$1)(?{2}select '''+@DBName+''' DBName,)(?{3}'+@DBName+'..)$3/gi}
         
 			 
 	')
@@ -41,19 +38,14 @@ OPEN DatabaseList
 	BEGIN Catch
 	print ERROR_MESSAGE() 
 	END Catch
-
 		
             FETCH NEXT FROM DatabaseList INTO @DBName
        END
     CLOSE DatabaseList
     DEALLOCATE DatabaseList
-
-
 SELECT * 
 FROM #SCMTemp
 ORDER BY [DBName] 
-
-
 DROP TABLE #SCMTemp
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
